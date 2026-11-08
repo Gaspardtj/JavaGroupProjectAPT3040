@@ -106,7 +106,12 @@ public class LibraryService {
         System.out.print("Enter Total Copies: ");
         int copies = getIntInput();
 
-        Book newBook = new Book(isbn, title, author, genre, year, copies);
+        if (isbn.trim().isEmpty() || title.trim().isEmpty() || author.trim().isEmpty()
+                || year < 1 || year > 9999 || copies < 0) {
+            System.out.println("Please provide ISBN, title, author, a year from 1 to 9999, and a non-negative copy count.");
+            return;
+        }
+        Book newBook = new Book(isbn.trim(), title.trim(), author.trim(), genre.trim(), year, copies);
 
         if (bookDAO.addBook(newBook)) {
             System.out.println("✅ Book added successfully!");
@@ -150,7 +155,7 @@ public class LibraryService {
     private void addNewMember() {
         System.out.println("\n--- ADD NEW MEMBER ---");
 
-        scanner.nextLine(); // Clear buffer
+
         System.out.print("Enter Name: ");
         String name = scanner.nextLine();
 
@@ -163,7 +168,11 @@ public class LibraryService {
         // Generate member code
         String memberCode = "MEM" + System.currentTimeMillis();
 
-        Member newMember = new Member(memberCode, name, email, phone);
+        if (name.trim().isEmpty()) {
+            System.out.println("Member name cannot be blank.");
+            return;
+        }
+        Member newMember = new Member(memberCode, name.trim(), email.trim(), phone.trim());
 
         if (memberDAO.addMember(newMember)) {
             System.out.println("✅ Member added successfully!");
@@ -210,7 +219,7 @@ public class LibraryService {
     private int getIntInput() {
         while (true) {
             try {
-                return Integer.parseInt(scanner.nextLine());
+                return Integer.parseInt(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
                 System.out.print("❌ Please enter a valid number: ");
             }

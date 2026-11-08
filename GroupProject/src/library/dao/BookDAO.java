@@ -54,7 +54,7 @@ public class BookDAO {
     // READ - Search books by title or author
     public List<Book> searchBooks(String keyword) {
         List<Book> books = new ArrayList<>();
-        String sql = "SELECT * FROM books WHERE title LIKE ? OR author LIKE ? ORDER BY title";
+        String sql = "SELECT * FROM books WHERE title ILIKE ? OR author ILIKE ? ORDER BY title";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, "%" + keyword + "%");
