@@ -1,0 +1,6 @@
+/build/
+/lib/
+/database.local.properties
+/postgres-admin.local.properties
+/GroupProject/out/
+*.log
